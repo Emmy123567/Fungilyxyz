@@ -21,7 +21,6 @@ export function CollectionsPage() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      {/* Header */}
       <div className="mb-8">
         <div className="flex items-center gap-2 text-[#7d8590] text-sm mb-4">
           <span>Home</span>
@@ -37,7 +36,6 @@ export function CollectionsPage() {
           </p>
         </div>
 
-        {/* Key Benefits */}
         <div className="grid md:grid-cols-3 gap-4 mb-8">
           <div className="bg-[#21262d] border border-[#30363d] rounded-lg p-4">
             <div className="flex items-center gap-3 mb-2">

@@ -171,26 +171,6 @@ body {
   * {
     @apply border-border outline-ring/50;
   }
-
-  /* Override default background colors to use black theme */
-  .bg-0d1117 {
-    background: #000000 !important;
-  }
-
-  .bg-161b22 {
-    background: #1a1a1a !important;
-    border: 1px solid #333333;
-  }
-
-  .bg-21262d {
-    background: #1a1a1a !important;
-    border: 1px solid #333333;
-  }
-
-  .bg-30363d {
-    background: #333333 !important;
-  }
-
   body {
     @apply bg-background text-foreground;
   }

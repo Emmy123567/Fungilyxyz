@@ -3,19 +3,17 @@ export interface Collection {
   name: string
   description: string
   image: string
-  mintPhase: "live" | "whitelist" | "upcoming" | "trading" | "ended"
+  creator: string
   price: string
   minted: number
   total: number
+  mintPhase: "upcoming" | "whitelist" | "live" | "trading" | "ended"
   chain: string
-  creator: string
-  category: string
   hasLiquidity: boolean
   liquidityPercent: number
   royalties: number
-  mintType: "Fixed" | "Tiered" | "Free"
+  mintType: string
   bondingCurve?: {
     priceIncrease: number
-    currentMultiplier: number
   }
 }

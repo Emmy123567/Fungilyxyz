@@ -3,7 +3,7 @@ import { Navigation } from "@/components/navigation"
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-[#0d1117]">
+    <div className="min-h-screen bg-black">
       <Navigation />
       <CollectionsPage />
     </div>

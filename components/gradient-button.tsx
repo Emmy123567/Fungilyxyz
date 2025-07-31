@@ -1,37 +1,35 @@
-"use client"
-
-import type { ReactNode } from "react"
+import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
+import { type ButtonHTMLAttributes, forwardRef } from "react"
 
-interface GradientButtonProps {
-  children: ReactNode
-  className?: string
-  size?: "sm" | "md" | "lg"
-  onClick?: () => void
+interface GradientButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  size?: "sm" | "default" | "lg"
 }
 
-export function GradientButton({ children, className, size = "md", onClick }: GradientButtonProps) {
-  const sizeClasses = {
-    sm: "px-4 py-2 text-sm",
-    md: "px-6 py-3 text-base",
-    lg: "px-8 py-4 text-lg",
-  }
+const GradientButton = forwardRef<HTMLButtonElement, GradientButtonProps>(
+  ({ className, size = "default", children, ...props }, ref) => {
+    const sizeClasses = {
+      sm: "h-8 px-3 text-sm",
+      default: "h-10 px-4",
+      lg: "h-12 px-8 text-lg",
+    }
 
-  return (
-    <button
-      onClick={onClick}
-      className={cn(
-        "relative overflow-hidden rounded-lg font-semibold text-white transition-all duration-300 hover:scale-105 active:scale-95",
-        sizeClasses[size],
-        className,
-      )}
-    >
-      <div className="absolute inset-0 bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 animate-gradient-x" />
-      <div className="absolute inset-[2px] bg-[#21262d] rounded-md flex items-center justify-center">
-        <span className="relative z-10 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent font-bold">
-          {children}
-        </span>
-      </div>
-    </button>
-  )
-}
+    return (
+      <Button
+        ref={ref}
+        className={cn(
+          "bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white border-0 font-semibold transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl",
+          sizeClasses[size],
+          className,
+        )}
+        {...props}
+      >
+        {children}
+      </Button>
+    )
+  },
+)
+
+GradientButton.displayName = "GradientButton"
+
+export { GradientButton }

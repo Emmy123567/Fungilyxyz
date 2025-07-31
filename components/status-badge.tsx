@@ -1,31 +1,45 @@
+import { Badge } from "@/components/ui/badge"
+
 interface StatusBadgeProps {
-  mintPhase: "live" | "whitelist" | "upcoming" | "trading" | "ended"
+  mintPhase: string
 }
 
 export function StatusBadge({ mintPhase }: StatusBadgeProps) {
-  const getStatusConfig = (phase: string) => {
+  const getStatusColor = (phase: string) => {
     switch (phase) {
       case "live":
-        return { color: "bg-green-500", text: "Live Mint", pulse: true }
+        return "bg-green-600 text-white"
       case "whitelist":
-        return { color: "bg-orange-500", text: "Whitelist", pulse: true }
+        return "bg-orange-600 text-white"
       case "upcoming":
-        return { color: "bg-blue-500", text: "Upcoming", pulse: false }
+        return "bg-blue-600 text-white"
       case "trading":
-        return { color: "bg-purple-500", text: "AMM Trading", pulse: true }
+        return "bg-purple-600 text-white"
       case "ended":
-        return { color: "bg-gray-500", text: "Ended", pulse: false }
+        return "bg-gray-600 text-white"
       default:
-        return { color: "bg-gray-500", text: "Unknown", pulse: false }
+        return "bg-gray-600 text-white"
     }
   }
 
-  const config = getStatusConfig(mintPhase)
+  const getStatusText = (phase: string) => {
+    switch (phase) {
+      case "live":
+        return "Live Mint"
+      case "whitelist":
+        return "Whitelist"
+      case "upcoming":
+        return "Upcoming"
+      case "trading":
+        return "Trading"
+      case "ended":
+        return "Ended"
+      default:
+        return "Unknown"
+    }
+  }
 
   return (
-    <div className="flex items-center gap-1 bg-black/70 backdrop-blur-sm rounded-full px-3 py-1">
-      <div className={`w-2 h-2 rounded-full ${config.color} ${config.pulse ? "animate-pulse" : ""}`} />
-      <span className="text-white text-xs font-medium">{config.text}</span>
-    </div>
+    <Badge className={`${getStatusColor(mintPhase)} border-0 text-xs font-medium`}>{getStatusText(mintPhase)}</Badge>
   )
 }

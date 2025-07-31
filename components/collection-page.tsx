@@ -51,7 +51,6 @@ export function CollectionPage({ collectionId }: CollectionPageProps) {
         </Link>
 
         <div className="grid lg:grid-cols-3 gap-8">
-          {/* Collection Image & Info */}
           <div className="lg:col-span-1 space-y-6">
             <div className="relative rounded-xl overflow-hidden bg-[#21262d] border border-[#30363d]">
               <div className="aspect-square relative">
@@ -76,7 +75,6 @@ export function CollectionPage({ collectionId }: CollectionPageProps) {
               )}
             </div>
 
-            {/* Collection Stats */}
             <Card className="bg-[#21262d] border border-[#30363d]">
               <CardHeader>
                 <CardTitle className="text-white">Collection Stats</CardTitle>
@@ -108,13 +106,11 @@ export function CollectionPage({ collectionId }: CollectionPageProps) {
             </Card>
           </div>
 
-          {/* Main Content */}
           <div className="lg:col-span-2 space-y-8">
             <div>
               <h1 className="text-4xl font-bold text-white mb-4">{collection.name}</h1>
               <p className="text-[#7d8590] text-lg leading-relaxed mb-6">{collection.description}</p>
 
-              {/* Key Features */}
               <div className="flex flex-wrap gap-2 mb-6">
                 <Badge className="bg-green-600/20 text-green-400 border-green-600/30">
                   <TrendingUp className="w-3 h-3 mr-1" />

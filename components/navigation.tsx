@@ -14,9 +14,11 @@ export function Navigation() {
               <Link href="/" className="text-white font-medium border-b-2 border-[#f78166] pb-1">
                 Mint
               </Link>
+              <Link href="/create" className="text-[#7d8590] hover:text-white cursor-pointer transition-colors">
+                Create
+              </Link>
               <span className="text-[#7d8590] hover:text-white cursor-pointer transition-colors">AMM Trading</span>
               <span className="text-[#7d8590] hover:text-white cursor-pointer transition-colors">Liquidity</span>
-              <span className="text-[#7d8590] hover:text-white cursor-pointer transition-colors">Create</span>
             </div>
           </div>
           <GradientButton>Connect Wallet</GradientButton>
