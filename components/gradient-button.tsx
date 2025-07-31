@@ -1,35 +1,23 @@
+import type React from "react"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
-import { type ButtonHTMLAttributes, forwardRef } from "react"
 
-interface GradientButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+interface GradientButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  children: React.ReactNode
   size?: "sm" | "default" | "lg"
 }
 
-const GradientButton = forwardRef<HTMLButtonElement, GradientButtonProps>(
-  ({ className, size = "default", children, ...props }, ref) => {
-    const sizeClasses = {
-      sm: "h-8 px-3 text-sm",
-      default: "h-10 px-4",
-      lg: "h-12 px-8 text-lg",
-    }
-
-    return (
-      <Button
-        ref={ref}
-        className={cn(
-          "bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white border-0 font-semibold transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl",
-          sizeClasses[size],
-          className,
-        )}
-        {...props}
-      >
-        {children}
-      </Button>
-    )
-  },
-)
-
-GradientButton.displayName = "GradientButton"
-
-export { GradientButton }
+export function GradientButton({ children, className, size = "default", ...props }: GradientButtonProps) {
+  return (
+    <Button
+      className={cn(
+        "bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white border-0 font-medium transition-all duration-200 hover:scale-105",
+        className,
+      )}
+      size={size}
+      {...props}
+    >
+      {children}
+    </Button>
+  )
+}

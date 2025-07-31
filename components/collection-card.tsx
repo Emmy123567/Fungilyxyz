@@ -65,12 +65,12 @@ export function CollectionCard({ collection }: CollectionCardProps) {
           <div className="grid grid-cols-2 gap-3 mb-3">
             <div>
               <span className="text-[#7d8590] text-xs">
-                {collection.mintPhase === "trading" ? "Floor Price" : "Mint Price"}
+                {collection.mintPhase === "trading" ? "Floor Price" : "Presale Price"}
               </span>
               <div className="text-white font-bold line-clamp-1">{collection.price}</div>
             </div>
             <div className="text-right">
-              <span className="text-[#7d8590] text-xs">Minted</span>
+              <span className="text-[#7d8590] text-xs">Sold</span>
               <div className="text-white font-bold line-clamp-1">
                 {collection.minted.toLocaleString()}/{collection.total.toLocaleString()}
               </div>
@@ -102,7 +102,7 @@ export function CollectionCard({ collection }: CollectionCardProps) {
           <div className="mt-auto">
             <GradientButton className="w-full" size="sm">
               {collection.mintPhase === "live"
-                ? "Mint Now"
+                ? "Buy Now"
                 : collection.mintPhase === "trading"
                   ? "Trade on AMM"
                   : collection.mintPhase === "whitelist"

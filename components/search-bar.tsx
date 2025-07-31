@@ -1,8 +1,9 @@
 "use client"
 
+import { Search, Filter } from "lucide-react"
 import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Search } from "lucide-react"
 
 interface SearchBarProps {
   searchTerm: string
@@ -33,48 +34,41 @@ export function SearchBar({
         />
       </div>
 
-      <Select value={selectedChain} onValueChange={onChainChange}>
-        <SelectTrigger className="w-full md:w-48 bg-[#21262d] border-[#30363d] text-white">
-          <SelectValue placeholder="All Chains" />
-        </SelectTrigger>
-        <SelectContent className="bg-[#21262d] border-[#30363d]">
-          <SelectItem value="all" className="text-white hover:bg-[#30363d]">
-            All Chains
-          </SelectItem>
-          <SelectItem value="ethereum" className="text-white hover:bg-[#30363d]">
-            Ethereum
-          </SelectItem>
-          <SelectItem value="polygon" className="text-white hover:bg-[#30363d]">
-            Polygon
-          </SelectItem>
-          <SelectItem value="arbitrum" className="text-white hover:bg-[#30363d]">
-            Arbitrum
-          </SelectItem>
-        </SelectContent>
-      </Select>
+      <div className="flex gap-2">
+        <Select value={selectedChain} onValueChange={onChainChange}>
+          <SelectTrigger className="w-32 bg-[#21262d] border-[#30363d] text-white">
+            <SelectValue placeholder="Chain" />
+          </SelectTrigger>
+          <SelectContent className="bg-[#21262d] border-[#30363d]">
+            <SelectItem value="all">All Chains</SelectItem>
+            <SelectItem value="Ethereum">Ethereum</SelectItem>
+            <SelectItem value="Base">Base</SelectItem>
+            <SelectItem value="Polygon">Polygon</SelectItem>
+            <SelectItem value="Arbitrum">Arbitrum</SelectItem>
+          </SelectContent>
+        </Select>
 
-      <Select value={selectedPhase} onValueChange={onPhaseChange}>
-        <SelectTrigger className="w-full md:w-48 bg-[#21262d] border-[#30363d] text-white">
-          <SelectValue placeholder="All Phases" />
-        </SelectTrigger>
-        <SelectContent className="bg-[#21262d] border-[#30363d]">
-          <SelectItem value="all" className="text-white hover:bg-[#30363d]">
-            All Phases
-          </SelectItem>
-          <SelectItem value="upcoming" className="text-white hover:bg-[#30363d]">
-            Upcoming
-          </SelectItem>
-          <SelectItem value="whitelist" className="text-white hover:bg-[#30363d]">
-            Whitelist
-          </SelectItem>
-          <SelectItem value="live" className="text-white hover:bg-[#30363d]">
-            Live
-          </SelectItem>
-          <SelectItem value="trading" className="text-white hover:bg-[#30363d]">
-            Trading
-          </SelectItem>
-        </SelectContent>
-      </Select>
+        <Select value={selectedPhase} onValueChange={onPhaseChange}>
+          <SelectTrigger className="w-32 bg-[#21262d] border-[#30363d] text-white">
+            <SelectValue placeholder="Phase" />
+          </SelectTrigger>
+          <SelectContent className="bg-[#21262d] border-[#30363d]">
+            <SelectItem value="all">All Phases</SelectItem>
+            <SelectItem value="upcoming">Upcoming</SelectItem>
+            <SelectItem value="whitelist">Whitelist</SelectItem>
+            <SelectItem value="live">Live</SelectItem>
+            <SelectItem value="trading">Trading</SelectItem>
+          </SelectContent>
+        </Select>
+
+        <Button
+          variant="outline"
+          size="icon"
+          className="border-[#30363d] text-[#7d8590] hover:text-white bg-transparent"
+        >
+          <Filter className="w-4 h-4" />
+        </Button>
+      </div>
     </div>
   )
 }

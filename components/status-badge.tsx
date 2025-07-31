@@ -1,45 +1,23 @@
 import { Badge } from "@/components/ui/badge"
 
 interface StatusBadgeProps {
-  mintPhase: string
+  mintPhase: "upcoming" | "whitelist" | "live" | "trading"
 }
 
 export function StatusBadge({ mintPhase }: StatusBadgeProps) {
-  const getStatusColor = (phase: string) => {
-    switch (phase) {
-      case "live":
-        return "bg-green-600 text-white"
-      case "whitelist":
-        return "bg-orange-600 text-white"
-      case "upcoming":
-        return "bg-blue-600 text-white"
-      case "trading":
-        return "bg-purple-600 text-white"
-      case "ended":
-        return "bg-gray-600 text-white"
-      default:
-        return "bg-gray-600 text-white"
-    }
+  const variants = {
+    upcoming: "bg-gray-600/20 text-gray-400 border-gray-600/30",
+    whitelist: "bg-blue-600/20 text-blue-400 border-blue-600/30",
+    live: "bg-green-600/20 text-green-400 border-green-600/30",
+    trading: "bg-purple-600/20 text-purple-400 border-purple-600/30",
   }
 
-  const getStatusText = (phase: string) => {
-    switch (phase) {
-      case "live":
-        return "Live Mint"
-      case "whitelist":
-        return "Whitelist"
-      case "upcoming":
-        return "Upcoming"
-      case "trading":
-        return "Trading"
-      case "ended":
-        return "Ended"
-      default:
-        return "Unknown"
-    }
+  const labels = {
+    upcoming: "Coming Soon",
+    whitelist: "Whitelist",
+    live: "Live",
+    trading: "Trading",
   }
 
-  return (
-    <Badge className={`${getStatusColor(mintPhase)} border-0 text-xs font-medium`}>{getStatusText(mintPhase)}</Badge>
-  )
+  return <Badge className={variants[mintPhase]}>{labels[mintPhase]}</Badge>
 }

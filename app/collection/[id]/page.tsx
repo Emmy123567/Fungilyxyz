@@ -1,5 +1,11 @@
 import { CollectionPage } from "@/components/collection-page"
 
-export default function Page({ params }: { params: { id: string } }) {
+interface PageProps {
+  params: {
+    id: string
+  }
+}
+
+export default function CollectionDetailPage({ params }: PageProps) {
   return <CollectionPage collectionId={params.id} />
 }

@@ -31,8 +31,8 @@ export function CollectionsPage() {
         <div className="mb-6">
           <h1 className="text-4xl font-bold text-white mb-4">Fungily NFT Presale System</h1>
           <p className="text-[#7d8590] text-lg max-w-4xl">
-            Next-gen minting platform with NFT-AMM integration. Unlike traditional mints, Fungily collections are
-            dynamic and liquidity-backed with instant trading post-mint.
+            Next-gen presale platform with NFT-AMM integration. Unlike traditional presales, Fungily collections are
+            dynamic and liquidity-backed with instant trading post-presale.
           </p>
         </div>
 
@@ -42,7 +42,7 @@ export function CollectionsPage() {
               <TrendingUp className="w-5 h-5 text-green-400" />
               <span className="text-white font-medium">Instant Trading</span>
             </div>
-            <p className="text-[#7d8590] text-sm">NFTs tradeable immediately after mint via bonding curves</p>
+            <p className="text-[#7d8590] text-sm">NFTs tradeable immediately after presale via bonding curves</p>
           </div>
 
           <div className="bg-[#21262d] border border-[#30363d] rounded-lg p-4">
@@ -78,7 +78,7 @@ export function CollectionsPage() {
         </p>
         <div className="flex items-center gap-2">
           <Badge className="bg-green-600/20 text-green-400 border-green-600/30">
-            {filteredCollections.filter((c) => c.mintPhase === "live").length} Live Mints
+            {filteredCollections.filter((c) => c.mintPhase === "live").length} Live Presales
           </Badge>
           <Badge className="bg-blue-600/20 text-blue-400 border-blue-600/30">
             {filteredCollections.filter((c) => c.hasLiquidity).length} With AMM
