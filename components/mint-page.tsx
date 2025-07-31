@@ -1,14 +1,15 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
+import { Badge } from "@/components/ui/badge"
+import { Progress } from "@/components/ui/progress"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Minus, Plus, Clock, Users, Zap, TrendingUp, Shield, Star, ExternalLink } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
-import { ArrowLeft, Plus, Minus } from "lucide-react"
-import { Navigation } from "./navigation"
-import { GradientButton } from "./gradient-button"
-import { StatusBadge } from "./status-badge"
-import { mockCollections } from "@/lib/mock-data"
-import { Input } from "@/components/ui/input"
 
 interface MintPageProps {
   collectionId: string
@@ -16,130 +17,420 @@ interface MintPageProps {
 
 export function MintPage({ collectionId }: MintPageProps) {
   const [quantity, setQuantity] = useState(1)
-  const collection = mockCollections.find((c) => c.id === Number.parseInt(collectionId))
+  const [timeLeft, setTimeLeft] = useState({
+    days: 2,
+    hours: 14,
+    minutes: 32,
+    seconds: 45,
+  })
 
-  if (!collection) {
-    return (
-      <div className="min-h-screen bg-[#0d1117] flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold text-white mb-4">Collection Not Found</h1>
-          <Link href="/" className="text-[#58a6ff] hover:text-white">
-            ← Back to Collections
-          </Link>
-        </div>
-      </div>
-    )
+  // Mock data - in real app this would come from API
+  const collection = {
+    name: "Cosmic Creatures",
+    description:
+      "A collection of 10,000 unique cosmic creatures exploring the universe. Each creature has unique traits and abilities that unlock special features in our upcoming game.",
+    image: "/placeholder.svg?height=500&width=500",
+    bannerImage: "/placeholder.svg?height=300&width=800",
+    creator: {
+      name: "ArtistDAO",
+      avatar: "/placeholder.svg?height=40&width=40",
+      verified: true,
+      followers: "12.5K",
+    },
+    currentPhase: "Whitelist",
+    price: 0.05,
+    minted: 2847,
+    totalSupply: 10000,
+    maxPerWallet: 5,
+    userMinted: 0,
+    floorPrice: 0.12,
+    volume24h: 45.7,
+    holders: 3421,
+    socialLinks: {
+      twitter: "https://twitter.com/cosmiccreatures",
+      discord: "https://discord.gg/cosmiccreatures",
+      website: "https://cosmiccreatures.io",
+    },
   }
 
-  const progress = (collection.minted / collection.total) * 100
-  const totalCost = Number.parseFloat(collection.price.replace(/[^\d.]/g, "")) * quantity
+  const progress = (collection.minted / collection.totalSupply) * 100
+  const phaseColor =
+    collection.currentPhase === "Live"
+      ? "bg-green-600"
+      : collection.currentPhase === "Whitelist"
+        ? "bg-orange-600"
+        : "bg-gray-600"
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTimeLeft((prev) => {
+        if (prev.seconds > 0) {
+          return { ...prev, seconds: prev.seconds - 1 }
+        } else if (prev.minutes > 0) {
+          return { ...prev, minutes: prev.minutes - 1, seconds: 59 }
+        } else if (prev.hours > 0) {
+          return { ...prev, hours: prev.hours - 1, minutes: 59, seconds: 59 }
+        } else if (prev.days > 0) {
+          return { ...prev, days: prev.days - 1, hours: 23, minutes: 59, seconds: 59 }
+        }
+        return prev
+      })
+    }, 1000)
+
+    return () => clearInterval(timer)
+  }, [])
+
+  const recentMints = [
+    { id: "#9876", price: "0.05 ETH", time: "2m ago", buyer: "0x1234...5678" },
+    { id: "#9875", price: "0.05 ETH", time: "5m ago", buyer: "0xabcd...efgh" },
+    { id: "#9874", price: "0.05 ETH", time: "8m ago", buyer: "0x9876...5432" },
+  ]
 
   return (
-    <div className="min-h-screen bg-[#0d1117]">
-      <Navigation />
-
-      <div className="container mx-auto px-4 py-8">
-        <Link href="/" className="flex items-center gap-2 text-[#58a6ff] hover:text-white mb-8 transition-colors">
-          <ArrowLeft className="w-4 h-4" />
-          Back to Collections
-        </Link>
-
-        <div className="grid lg:grid-cols-2 gap-12">
-          <div className="space-y-6">
-            <div className="relative rounded-xl overflow-hidden border border-[#30363d]">
-              <Image
-                src={collection.image || "/placeholder.svg"}
-                alt={collection.name}
-                width={600}
-                height={600}
-                className="w-full aspect-square object-cover"
-              />
-              <div className="absolute top-4 right-4">
-                <StatusBadge status={collection.status} />
-              </div>
+    <div className="min-h-screen bg-black">
+      {/* Navigation */}
+      <nav className="bg-gray-900/50 backdrop-blur-md border-b border-gray-800">
+        <div className="container mx-auto px-4 py-4">
+          <div className="flex items-center justify-between">
+            <Link href="/" className="text-2xl font-bold text-white">
+              Fungily
+            </Link>
+            <div className="flex items-center gap-4">
+              <Link href="/" className="text-gray-300 hover:text-white">
+                Collections
+              </Link>
+              <Button className="bg-white text-black hover:bg-gray-200">Connect Wallet</Button>
             </div>
           </div>
+        </div>
+      </nav>
 
-          <div className="space-y-8">
-            <div>
-              <h1 className="text-4xl font-bold text-white mb-4">{collection.name}</h1>
-              <p className="text-[#7d8590] text-lg leading-relaxed">{collection.description}</p>
+      {/* Banner */}
+      <div className="relative h-64 overflow-hidden">
+        <Image
+          src={collection.bannerImage || "/placeholder.svg"}
+          alt="Collection Banner"
+          fill
+          className="object-cover"
+        />
+        <div className="absolute inset-0 bg-black/40" />
+        <div className="absolute bottom-4 left-4">
+          <Badge className={`${phaseColor} text-white border-0 text-lg px-4 py-2`}>
+            {collection.currentPhase} Phase
+          </Badge>
+        </div>
+      </div>
+
+      <div className="container mx-auto px-4 py-8">
+        <div className="grid lg:grid-cols-3 gap-8">
+          {/* Main Content */}
+          <div className="lg:col-span-2 space-y-8">
+            {/* Collection Header */}
+            <div className="flex items-start gap-6">
+              <div className="relative">
+                <Image
+                  src={collection.image || "/placeholder.svg"}
+                  alt={collection.name}
+                  width={120}
+                  height={120}
+                  className="rounded-2xl border-4 border-gray-700"
+                />
+              </div>
+              <div className="flex-1">
+                <div className="flex items-center gap-3 mb-2">
+                  <h1 className="text-4xl font-bold text-white">{collection.name}</h1>
+                  {collection.creator.verified && (
+                    <div className="bg-blue-600 rounded-full p-1">
+                      <Shield className="w-5 h-5 text-white" />
+                    </div>
+                  )}
+                </div>
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="flex items-center gap-2">
+                    <Image
+                      src={collection.creator.avatar || "/placeholder.svg"}
+                      alt={collection.creator.name}
+                      width={32}
+                      height={32}
+                      className="rounded-full"
+                    />
+                    <span className="text-white font-medium">{collection.creator.name}</span>
+                  </div>
+                  <div className="text-gray-400">{collection.creator.followers} followers</div>
+                </div>
+                <p className="text-gray-300 leading-relaxed mb-4">{collection.description}</p>
+                <div className="flex gap-3">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="border-gray-600 text-white hover:bg-gray-800 bg-transparent"
+                  >
+                    <ExternalLink className="w-4 h-4 mr-2" />
+                    Website
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="border-gray-600 text-white hover:bg-gray-800 bg-transparent"
+                  >
+                    Twitter
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="border-gray-600 text-white hover:bg-gray-800 bg-transparent"
+                  >
+                    Discord
+                  </Button>
+                </div>
+              </div>
             </div>
 
-            <div className="bg-[#21262d] border border-[#30363d] rounded-xl p-6 space-y-6">
-              <div className="flex items-center justify-between">
-                <span className="text-[#7d8590]">Mint Price</span>
-                <span className="text-3xl font-bold text-white">{collection.price}</span>
-              </div>
+            {/* Stats */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <Card className="bg-gray-900 border-gray-800">
+                <CardContent className="p-4 text-center">
+                  <div className="text-2xl font-bold text-white">{collection.floorPrice} ETH</div>
+                  <div className="text-gray-400 text-sm">Floor Price</div>
+                </CardContent>
+              </Card>
+              <Card className="bg-gray-900 border-gray-800">
+                <CardContent className="p-4 text-center">
+                  <div className="text-2xl font-bold text-white">{collection.volume24h} ETH</div>
+                  <div className="text-gray-400 text-sm">24h Volume</div>
+                </CardContent>
+              </Card>
+              <Card className="bg-gray-900 border-gray-800">
+                <CardContent className="p-4 text-center">
+                  <div className="text-2xl font-bold text-white">{collection.holders.toLocaleString()}</div>
+                  <div className="text-gray-400 text-sm">Holders</div>
+                </CardContent>
+              </Card>
+              <Card className="bg-gray-900 border-gray-800">
+                <CardContent className="p-4 text-center">
+                  <div className="text-2xl font-bold text-white">{Math.round(progress)}%</div>
+                  <div className="text-gray-400 text-sm">Minted</div>
+                </CardContent>
+              </Card>
+            </div>
 
-              <div>
-                <div className="flex justify-between text-sm mb-2">
-                  <span className="text-[#7d8590]">Minted</span>
-                  <span className="text-white font-medium">
-                    {collection.minted.toLocaleString()} / {collection.total.toLocaleString()}
-                  </span>
-                </div>
-                <div className="w-full bg-[#30363d] rounded-full h-3">
-                  <div
-                    className="bg-gradient-to-r from-green-400 to-blue-500 h-3 rounded-full transition-all duration-500"
-                    style={{ width: `${progress}%` }}
-                  />
-                </div>
-                <div className="text-right text-sm text-[#7d8590] mt-1">{Math.round(progress)}% minted</div>
-              </div>
+            {/* Tabs */}
+            <Tabs defaultValue="mint" className="w-full">
+              <TabsList className="grid w-full grid-cols-3 bg-gray-900">
+                <TabsTrigger value="mint" className="data-[state=active]:bg-white data-[state=active]:text-black">
+                  Mint
+                </TabsTrigger>
+                <TabsTrigger value="activity" className="data-[state=active]:bg-white data-[state=active]:text-black">
+                  Activity
+                </TabsTrigger>
+                <TabsTrigger value="analytics" className="data-[state=active]:bg-white data-[state=active]:text-black">
+                  Analytics
+                </TabsTrigger>
+              </TabsList>
 
-              <div className="space-y-4">
-                <label className="text-white font-medium">Quantity</label>
-                <div className="flex items-center gap-4">
-                  <button
-                    onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                    className="w-10 h-10 rounded-lg bg-[#30363d] text-white hover:bg-[#484f58] transition-colors flex items-center justify-center"
-                  >
-                    <Minus className="w-4 h-4" />
-                  </button>
-                  <Input
-                    type="number"
-                    value={quantity}
-                    onChange={(e) => setQuantity(Math.max(1, Number.parseInt(e.target.value) || 1))}
-                    className="w-20 text-center bg-[#0d1117] border-[#30363d] text-white"
-                    min="1"
-                    max="10"
-                  />
-                  <button
-                    onClick={() => setQuantity(Math.min(10, quantity + 1))}
-                    className="w-10 h-10 rounded-lg bg-[#30363d] text-white hover:bg-[#484f58] transition-colors flex items-center justify-center"
-                  >
-                    <Plus className="w-4 h-4" />
-                  </button>
-                </div>
-                <p className="text-[#7d8590] text-sm">Max 10 per transaction</p>
-              </div>
+              <TabsContent value="mint" className="mt-6">
+                <Card className="bg-gray-900 border-gray-800">
+                  <CardContent className="p-6">
+                    <div className="text-center mb-6">
+                      <h3 className="text-2xl font-bold text-white mb-2">Mint Your NFT</h3>
+                      <p className="text-gray-400">Join the cosmic adventure</p>
+                    </div>
 
-              <div className="bg-[#0d1117] rounded-lg p-4 space-y-2">
-                <div className="flex justify-between">
-                  <span className="text-[#7d8590]">Subtotal</span>
-                  <span className="text-white">{totalCost.toFixed(3)} ETH</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-[#7d8590]">Gas (est.)</span>
-                  <span className="text-white">~0.005 ETH</span>
-                </div>
-                <div className="border-t border-[#30363d] pt-2">
-                  <div className="flex justify-between">
-                    <span className="text-white font-medium">Total</span>
-                    <span className="text-white font-bold text-lg">{(totalCost + 0.005).toFixed(3)} ETH</span>
+                    {/* Progress */}
+                    <div className="mb-6">
+                      <div className="flex justify-between text-white mb-2">
+                        <span>Minted</span>
+                        <span>
+                          {collection.minted.toLocaleString()} / {collection.totalSupply.toLocaleString()}
+                        </span>
+                      </div>
+                      <Progress value={progress} className="h-3" />
+                    </div>
+
+                    {/* Quantity Selector */}
+                    <div className="flex items-center justify-center gap-4 mb-6">
+                      <Button
+                        variant="outline"
+                        size="icon"
+                        onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                        className="border-gray-600 text-white hover:bg-white hover:text-black"
+                      >
+                        <Minus className="w-4 h-4" />
+                      </Button>
+                      <div className="text-center">
+                        <Input
+                          type="number"
+                          value={quantity}
+                          onChange={(e) =>
+                            setQuantity(
+                              Math.max(1, Math.min(collection.maxPerWallet, Number.parseInt(e.target.value) || 1)),
+                            )
+                          }
+                          className="w-20 text-center bg-gray-800 border-gray-600 text-white text-lg font-bold"
+                          min="1"
+                          max={collection.maxPerWallet}
+                        />
+                        <p className="text-gray-400 text-sm mt-1">Quantity</p>
+                      </div>
+                      <Button
+                        variant="outline"
+                        size="icon"
+                        onClick={() => setQuantity(Math.min(collection.maxPerWallet, quantity + 1))}
+                        className="border-gray-600 text-white hover:bg-white hover:text-black"
+                      >
+                        <Plus className="w-4 h-4" />
+                      </Button>
+                    </div>
+
+                    {/* Cost Breakdown */}
+                    <div className="bg-gray-800 rounded-lg p-4 mb-6">
+                      <div className="flex justify-between text-white mb-2">
+                        <span>Price per NFT:</span>
+                        <span>{collection.price} ETH</span>
+                      </div>
+                      <div className="flex justify-between text-white mb-2">
+                        <span>Quantity:</span>
+                        <span>{quantity}</span>
+                      </div>
+                      <div className="flex justify-between text-gray-400 text-sm mb-2">
+                        <span>Gas Fee (est.):</span>
+                        <span>~0.005 ETH</span>
+                      </div>
+                      <div className="border-t border-gray-700 pt-2">
+                        <div className="flex justify-between text-white font-bold text-lg">
+                          <span>Total Cost:</span>
+                          <span>{(collection.price * quantity + 0.005).toFixed(3)} ETH</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <Button className="w-full bg-white text-black hover:bg-gray-200 text-lg py-6 font-semibold">
+                      <Zap className="w-5 h-5 mr-2" />
+                      Connect Wallet & Mint
+                    </Button>
+
+                    <p className="text-center text-gray-400 text-sm mt-4">
+                      You have minted {collection.userMinted} / {collection.maxPerWallet} NFTs
+                    </p>
+                  </CardContent>
+                </Card>
+              </TabsContent>
+
+              <TabsContent value="activity" className="mt-6">
+                <Card className="bg-gray-900 border-gray-800">
+                  <CardHeader>
+                    <CardTitle className="text-white">Recent Mints</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-4">
+                      {recentMints.map((mint, index) => (
+                        <div key={index} className="flex items-center justify-between p-3 bg-gray-800 rounded-lg">
+                          <div className="flex items-center gap-3">
+                            <div className="w-10 h-10 bg-gradient-to-br from-gray-600 to-gray-700 rounded-lg flex items-center justify-center">
+                              <span className="text-white text-xs font-bold">{mint.id.slice(-2)}</span>
+                            </div>
+                            <div>
+                              <p className="text-white font-medium">{mint.id}</p>
+                              <p className="text-gray-400 text-sm">{mint.buyer}</p>
+                            </div>
+                          </div>
+                          <div className="text-right">
+                            <p className="text-white font-medium">{mint.price}</p>
+                            <p className="text-gray-400 text-sm">{mint.time}</p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+              </TabsContent>
+
+              <TabsContent value="analytics" className="mt-6">
+                <Card className="bg-gray-900 border-gray-800">
+                  <CardHeader>
+                    <CardTitle className="text-white">Collection Analytics</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="h-64 bg-gray-800 rounded-lg flex items-center justify-center">
+                      <p className="text-gray-400">Analytics chart would go here</p>
+                    </div>
+                  </CardContent>
+                </Card>
+              </TabsContent>
+            </Tabs>
+          </div>
+
+          {/* Sidebar */}
+          <div className="space-y-6">
+            {/* Countdown */}
+            <Card className="bg-gray-900 border-gray-800">
+              <CardHeader>
+                <CardTitle className="text-white flex items-center gap-2">
+                  <Clock className="w-5 h-5" />
+                  {collection.currentPhase} Phase Ends In
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-2 gap-4 text-center">
+                  <div>
+                    <div className="text-3xl font-bold text-white">{timeLeft.days}</div>
+                    <div className="text-gray-400 text-sm">Days</div>
+                  </div>
+                  <div>
+                    <div className="text-3xl font-bold text-white">{timeLeft.hours}</div>
+                    <div className="text-gray-400 text-sm">Hours</div>
+                  </div>
+                  <div>
+                    <div className="text-3xl font-bold text-white">{timeLeft.minutes}</div>
+                    <div className="text-gray-400 text-sm">Minutes</div>
+                  </div>
+                  <div>
+                    <div className="text-3xl font-bold text-white">{timeLeft.seconds}</div>
+                    <div className="text-gray-400 text-sm">Seconds</div>
                   </div>
                 </div>
-              </div>
+              </CardContent>
+            </Card>
 
-              <GradientButton className="w-full" size="lg">
-                {collection.status === "live"
-                  ? `Mint ${quantity} NFT${quantity > 1 ? "s" : ""}`
-                  : collection.status === "upcoming"
-                    ? "Coming Soon"
-                    : "Sold Out"}
-              </GradientButton>
-            </div>
+            {/* Your NFTs */}
+            <Card className="bg-gray-900 border-gray-800">
+              <CardHeader>
+                <CardTitle className="text-white">Your NFTs</CardTitle>
+                <CardDescription className="text-gray-400">0 NFTs owned</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="text-center text-gray-400 py-8">
+                  <Star className="w-12 h-12 mx-auto mb-4 opacity-50" />
+                  <p>No NFTs minted yet</p>
+                  <p className="text-sm mt-2">Your minted NFTs will appear here</p>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Quick Actions */}
+            <Card className="bg-gray-900 border-gray-800">
+              <CardHeader>
+                <CardTitle className="text-white">Quick Actions</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                <Link href={`/trade/${collectionId}`}>
+                  <Button
+                    variant="outline"
+                    className="w-full border-gray-600 text-white hover:bg-gray-800 bg-transparent"
+                  >
+                    <TrendingUp className="w-4 h-4 mr-2" />
+                    Trade NFTs
+                  </Button>
+                </Link>
+                <Button
+                  variant="outline"
+                  className="w-full border-gray-600 text-white hover:bg-gray-800 bg-transparent"
+                >
+                  <Users className="w-4 h-4 mr-2" />
+                  Join Community
+                </Button>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </div>

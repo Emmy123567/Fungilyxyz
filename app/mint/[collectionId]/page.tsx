@@ -83,19 +83,19 @@ export default function MintPage({ params }: { params: { collectionId: string } 
   ]
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-purple-900 via-purple-800 to-pink-600">
+    <div className="min-h-screen bg-black">
       {/* Navigation */}
-      <nav className="bg-black/20 backdrop-blur-md border-b border-white/10">
+      <nav className="bg-gray-900/50 backdrop-blur-md border-b border-gray-800">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <Link href="/" className="text-2xl font-bold text-white">
               Fungily
             </Link>
             <div className="flex items-center gap-4">
-              <Link href="/explore" className="text-white/80 hover:text-white">
-                Explore
+              <Link href="/" className="text-gray-300 hover:text-white">
+                Collections
               </Link>
-              <Button className="bg-white text-purple-900 hover:bg-purple-50">Connect Wallet</Button>
+              <Button className="bg-white text-black hover:bg-gray-200">Connect Wallet</Button>
             </div>
           </div>
         </div>
@@ -129,7 +129,7 @@ export default function MintPage({ params }: { params: { collectionId: string } 
                   alt={collection.name}
                   width={120}
                   height={120}
-                  className="rounded-2xl border-4 border-white/20"
+                  className="rounded-2xl border-4 border-gray-700"
                 />
               </div>
               <div className="flex-1">
@@ -152,14 +152,14 @@ export default function MintPage({ params }: { params: { collectionId: string } 
                     />
                     <span className="text-white font-medium">{collection.creator.name}</span>
                   </div>
-                  <div className="text-purple-200">{collection.creator.followers} followers</div>
+                  <div className="text-gray-400">{collection.creator.followers} followers</div>
                 </div>
-                <p className="text-purple-100 leading-relaxed mb-4">{collection.description}</p>
+                <p className="text-gray-300 leading-relaxed mb-4">{collection.description}</p>
                 <div className="flex gap-3">
                   <Button
                     variant="outline"
                     size="sm"
-                    className="border-white/30 text-white hover:bg-white/10 bg-transparent"
+                    className="border-gray-600 text-white hover:bg-gray-800 bg-transparent"
                   >
                     <ExternalLink className="w-4 h-4 mr-2" />
                     Website
@@ -167,14 +167,14 @@ export default function MintPage({ params }: { params: { collectionId: string } 
                   <Button
                     variant="outline"
                     size="sm"
-                    className="border-white/30 text-white hover:bg-white/10 bg-transparent"
+                    className="border-gray-600 text-white hover:bg-gray-800 bg-transparent"
                   >
                     Twitter
                   </Button>
                   <Button
                     variant="outline"
                     size="sm"
-                    className="border-white/30 text-white hover:bg-white/10 bg-transparent"
+                    className="border-gray-600 text-white hover:bg-gray-800 bg-transparent"
                   >
                     Discord
                   </Button>
@@ -184,58 +184,52 @@ export default function MintPage({ params }: { params: { collectionId: string } 
 
             {/* Stats */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              <Card className="bg-white/10 backdrop-blur-sm border-white/20">
+              <Card className="bg-gray-900 border-gray-800">
                 <CardContent className="p-4 text-center">
                   <div className="text-2xl font-bold text-white">{collection.floorPrice} ETH</div>
-                  <div className="text-purple-200 text-sm">Floor Price</div>
+                  <div className="text-gray-400 text-sm">Floor Price</div>
                 </CardContent>
               </Card>
-              <Card className="bg-white/10 backdrop-blur-sm border-white/20">
+              <Card className="bg-gray-900 border-gray-800">
                 <CardContent className="p-4 text-center">
                   <div className="text-2xl font-bold text-white">{collection.volume24h} ETH</div>
-                  <div className="text-purple-200 text-sm">24h Volume</div>
+                  <div className="text-gray-400 text-sm">24h Volume</div>
                 </CardContent>
               </Card>
-              <Card className="bg-white/10 backdrop-blur-sm border-white/20">
+              <Card className="bg-gray-900 border-gray-800">
                 <CardContent className="p-4 text-center">
                   <div className="text-2xl font-bold text-white">{collection.holders.toLocaleString()}</div>
-                  <div className="text-purple-200 text-sm">Holders</div>
+                  <div className="text-gray-400 text-sm">Holders</div>
                 </CardContent>
               </Card>
-              <Card className="bg-white/10 backdrop-blur-sm border-white/20">
+              <Card className="bg-gray-900 border-gray-800">
                 <CardContent className="p-4 text-center">
                   <div className="text-2xl font-bold text-white">{Math.round(progress)}%</div>
-                  <div className="text-purple-200 text-sm">Minted</div>
+                  <div className="text-gray-400 text-sm">Minted</div>
                 </CardContent>
               </Card>
             </div>
 
             {/* Tabs */}
             <Tabs defaultValue="mint" className="w-full">
-              <TabsList className="grid w-full grid-cols-3 bg-white/10">
-                <TabsTrigger value="mint" className="data-[state=active]:bg-white data-[state=active]:text-purple-900">
+              <TabsList className="grid w-full grid-cols-3 bg-gray-900">
+                <TabsTrigger value="mint" className="data-[state=active]:bg-white data-[state=active]:text-black">
                   Mint
                 </TabsTrigger>
-                <TabsTrigger
-                  value="activity"
-                  className="data-[state=active]:bg-white data-[state=active]:text-purple-900"
-                >
+                <TabsTrigger value="activity" className="data-[state=active]:bg-white data-[state=active]:text-black">
                   Activity
                 </TabsTrigger>
-                <TabsTrigger
-                  value="analytics"
-                  className="data-[state=active]:bg-white data-[state=active]:text-purple-900"
-                >
+                <TabsTrigger value="analytics" className="data-[state=active]:bg-white data-[state=active]:text-black">
                   Analytics
                 </TabsTrigger>
               </TabsList>
 
               <TabsContent value="mint" className="mt-6">
-                <Card className="bg-white/10 backdrop-blur-sm border-white/20">
+                <Card className="bg-gray-900 border-gray-800">
                   <CardContent className="p-6">
                     <div className="text-center mb-6">
                       <h3 className="text-2xl font-bold text-white mb-2">Mint Your NFT</h3>
-                      <p className="text-purple-200">Join the cosmic adventure</p>
+                      <p className="text-gray-400">Join the cosmic adventure</p>
                     </div>
 
                     {/* Progress */}
@@ -255,7 +249,7 @@ export default function MintPage({ params }: { params: { collectionId: string } 
                         variant="outline"
                         size="icon"
                         onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                        className="border-white/30 text-white hover:bg-white hover:text-purple-900"
+                        className="border-gray-600 text-white hover:bg-white hover:text-black"
                       >
                         <Minus className="w-4 h-4" />
                       </Button>
@@ -268,24 +262,24 @@ export default function MintPage({ params }: { params: { collectionId: string } 
                               Math.max(1, Math.min(collection.maxPerWallet, Number.parseInt(e.target.value) || 1)),
                             )
                           }
-                          className="w-20 text-center bg-white/20 border-white/30 text-white text-lg font-bold"
+                          className="w-20 text-center bg-gray-800 border-gray-600 text-white text-lg font-bold"
                           min="1"
                           max={collection.maxPerWallet}
                         />
-                        <p className="text-purple-200 text-sm mt-1">Quantity</p>
+                        <p className="text-gray-400 text-sm mt-1">Quantity</p>
                       </div>
                       <Button
                         variant="outline"
                         size="icon"
                         onClick={() => setQuantity(Math.min(collection.maxPerWallet, quantity + 1))}
-                        className="border-white/30 text-white hover:bg-white hover:text-purple-900"
+                        className="border-gray-600 text-white hover:bg-white hover:text-black"
                       >
                         <Plus className="w-4 h-4" />
                       </Button>
                     </div>
 
                     {/* Cost Breakdown */}
-                    <div className="bg-white/5 rounded-lg p-4 mb-6">
+                    <div className="bg-gray-800 rounded-lg p-4 mb-6">
                       <div className="flex justify-between text-white mb-2">
                         <span>Price per NFT:</span>
                         <span>{collection.price} ETH</span>
@@ -294,11 +288,11 @@ export default function MintPage({ params }: { params: { collectionId: string } 
                         <span>Quantity:</span>
                         <span>{quantity}</span>
                       </div>
-                      <div className="flex justify-between text-purple-200 text-sm mb-2">
+                      <div className="flex justify-between text-gray-400 text-sm mb-2">
                         <span>Gas Fee (est.):</span>
                         <span>~0.005 ETH</span>
                       </div>
-                      <div className="border-t border-white/10 pt-2">
+                      <div className="border-t border-gray-700 pt-2">
                         <div className="flex justify-between text-white font-bold text-lg">
                           <span>Total Cost:</span>
                           <span>{(collection.price * quantity + 0.005).toFixed(3)} ETH</span>
@@ -306,12 +300,12 @@ export default function MintPage({ params }: { params: { collectionId: string } 
                       </div>
                     </div>
 
-                    <Button className="w-full bg-white text-purple-900 hover:bg-purple-50 text-lg py-6 font-semibold">
+                    <Button className="w-full bg-white text-black hover:bg-gray-200 text-lg py-6 font-semibold">
                       <Zap className="w-5 h-5 mr-2" />
                       Connect Wallet & Mint
                     </Button>
 
-                    <p className="text-center text-purple-200 text-sm mt-4">
+                    <p className="text-center text-gray-400 text-sm mt-4">
                       You have minted {collection.userMinted} / {collection.maxPerWallet} NFTs
                     </p>
                   </CardContent>
@@ -319,26 +313,26 @@ export default function MintPage({ params }: { params: { collectionId: string } 
               </TabsContent>
 
               <TabsContent value="activity" className="mt-6">
-                <Card className="bg-white/10 backdrop-blur-sm border-white/20">
+                <Card className="bg-gray-900 border-gray-800">
                   <CardHeader>
                     <CardTitle className="text-white">Recent Mints</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-4">
                       {recentMints.map((mint, index) => (
-                        <div key={index} className="flex items-center justify-between p-3 bg-white/5 rounded-lg">
+                        <div key={index} className="flex items-center justify-between p-3 bg-gray-800 rounded-lg">
                           <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 bg-gradient-to-br from-purple-400 to-pink-400 rounded-lg flex items-center justify-center">
+                            <div className="w-10 h-10 bg-gradient-to-br from-gray-600 to-gray-700 rounded-lg flex items-center justify-center">
                               <span className="text-white text-xs font-bold">{mint.id.slice(-2)}</span>
                             </div>
                             <div>
                               <p className="text-white font-medium">{mint.id}</p>
-                              <p className="text-purple-200 text-sm">{mint.buyer}</p>
+                              <p className="text-gray-400 text-sm">{mint.buyer}</p>
                             </div>
                           </div>
                           <div className="text-right">
                             <p className="text-white font-medium">{mint.price}</p>
-                            <p className="text-purple-200 text-sm">{mint.time}</p>
+                            <p className="text-gray-400 text-sm">{mint.time}</p>
                           </div>
                         </div>
                       ))}
@@ -348,13 +342,13 @@ export default function MintPage({ params }: { params: { collectionId: string } 
               </TabsContent>
 
               <TabsContent value="analytics" className="mt-6">
-                <Card className="bg-white/10 backdrop-blur-sm border-white/20">
+                <Card className="bg-gray-900 border-gray-800">
                   <CardHeader>
                     <CardTitle className="text-white">Collection Analytics</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <div className="h-64 bg-white/5 rounded-lg flex items-center justify-center">
-                      <p className="text-purple-200">Analytics chart would go here</p>
+                    <div className="h-64 bg-gray-800 rounded-lg flex items-center justify-center">
+                      <p className="text-gray-400">Analytics chart would go here</p>
                     </div>
                   </CardContent>
                 </Card>
@@ -365,7 +359,7 @@ export default function MintPage({ params }: { params: { collectionId: string } 
           {/* Sidebar */}
           <div className="space-y-6">
             {/* Countdown */}
-            <Card className="bg-white/10 backdrop-blur-sm border-white/20">
+            <Card className="bg-gray-900 border-gray-800">
               <CardHeader>
                 <CardTitle className="text-white flex items-center gap-2">
                   <Clock className="w-5 h-5" />
@@ -376,32 +370,32 @@ export default function MintPage({ params }: { params: { collectionId: string } 
                 <div className="grid grid-cols-2 gap-4 text-center">
                   <div>
                     <div className="text-3xl font-bold text-white">{timeLeft.days}</div>
-                    <div className="text-purple-200 text-sm">Days</div>
+                    <div className="text-gray-400 text-sm">Days</div>
                   </div>
                   <div>
                     <div className="text-3xl font-bold text-white">{timeLeft.hours}</div>
-                    <div className="text-purple-200 text-sm">Hours</div>
+                    <div className="text-gray-400 text-sm">Hours</div>
                   </div>
                   <div>
                     <div className="text-3xl font-bold text-white">{timeLeft.minutes}</div>
-                    <div className="text-purple-200 text-sm">Minutes</div>
+                    <div className="text-gray-400 text-sm">Minutes</div>
                   </div>
                   <div>
                     <div className="text-3xl font-bold text-white">{timeLeft.seconds}</div>
-                    <div className="text-purple-200 text-sm">Seconds</div>
+                    <div className="text-gray-400 text-sm">Seconds</div>
                   </div>
                 </div>
               </CardContent>
             </Card>
 
             {/* Your NFTs */}
-            <Card className="bg-white/10 backdrop-blur-sm border-white/20">
+            <Card className="bg-gray-900 border-gray-800">
               <CardHeader>
                 <CardTitle className="text-white">Your NFTs</CardTitle>
-                <CardDescription className="text-purple-200">0 NFTs owned</CardDescription>
+                <CardDescription className="text-gray-400">0 NFTs owned</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="text-center text-purple-200 py-8">
+                <div className="text-center text-gray-400 py-8">
                   <Star className="w-12 h-12 mx-auto mb-4 opacity-50" />
                   <p>No NFTs minted yet</p>
                   <p className="text-sm mt-2">Your minted NFTs will appear here</p>
@@ -410,7 +404,7 @@ export default function MintPage({ params }: { params: { collectionId: string } 
             </Card>
 
             {/* Quick Actions */}
-            <Card className="bg-white/10 backdrop-blur-sm border-white/20">
+            <Card className="bg-gray-900 border-gray-800">
               <CardHeader>
                 <CardTitle className="text-white">Quick Actions</CardTitle>
               </CardHeader>
@@ -418,7 +412,7 @@ export default function MintPage({ params }: { params: { collectionId: string } 
                 <Link href={`/trade/${params.collectionId}`}>
                   <Button
                     variant="outline"
-                    className="w-full border-white/30 text-white hover:bg-white/10 bg-transparent"
+                    className="w-full border-gray-600 text-white hover:bg-gray-800 bg-transparent"
                   >
                     <TrendingUp className="w-4 h-4 mr-2" />
                     Trade NFTs
@@ -426,7 +420,7 @@ export default function MintPage({ params }: { params: { collectionId: string } 
                 </Link>
                 <Button
                   variant="outline"
-                  className="w-full border-white/30 text-white hover:bg-white/10 bg-transparent"
+                  className="w-full border-gray-600 text-white hover:bg-gray-800 bg-transparent"
                 >
                   <Users className="w-4 h-4 mr-2" />
                   Join Community
